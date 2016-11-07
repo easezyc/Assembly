@@ -1,0 +1,25 @@
+mov bl,[1000]  //把第一个操作数放入bl寄存器
+mov cl,[1001]  //把第二个操作数放入cl寄存器
+cmp bl,0  //把第一个操作数和0作比较
+jz  0139  //如果第一个操作数等于0就跳出循环
+cmp cl,0  //把第二个操作数和0作比较
+Jz  0139  //如果第二个操作数等于0就跳出循环
+mov ax,0	//把AX寄存器置0
+mov dx,0	//把dx寄存器置0
+mov al,dl	
+Clc		//清空标志位
+adc al,bl		//把al和第一个操作数相加
+daa   //调整BCD码
+mov dl,al   //把al寄存器的结果存入dl寄存器
+mov al,dh   //dh用来存结果的高八位
+adc al,0   //al加低位的进位
+daa
+mov dh,al   //把al计算的结果存入dh
+mov al,cl
+clc
+sub al,1  	//计数器自减1
+das
+mov cl,al
+Jnz  0118  //如果CF标志位不等于1跳回第9步
+mov [1002],dl  //把dl存入低位
+mov [1003],dh   //把dh存入高位

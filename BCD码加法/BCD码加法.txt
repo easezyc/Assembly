@@ -1,0 +1,18 @@
+MOV SI, 1000  //把第一个数的末位的位置放入SI寄存器
+MOV BX, 1010  //把第二个数的末位的位置放入BX寄存器
+MOV DI, 1020  //用DI寄存器来指向结果的末位的位置
+CLC  //清空标志位
+MOV AL, [SI]  //把第一个数的末位放入AL
+INC SI  //SI加1
+ADC AL, [BX]  //把第二个数的末位和AL相加
+AAA  //整理非压缩BCD码
+PUSHF  //把标志位压入堆栈
+ADD AL, 30  //计算这个数的ASCII码，并放入AL寄存器
+MOV [DI], AL  //把AL中的数存入结果相应位置中
+INC BX  //BX加1
+INC DI  //DI加1
+CMP SI, 1005  //比较寄存器SI和数1005，如果相等则ZF=1否则ZF=0
+JZ 0120   //若ZF=1就跳出循环
+POPF   //把标志位取出来
+JMP 010A    //跳回第五行的代码
+Int 3

@@ -1,0 +1,42 @@
+mov di,100f   //子串地址
+	mov si,10ff    //父串地址
+	mov cl,ff      //子串长度
+count:	inc di			//该函数用于计算子串长度
+	inc cl			
+	mov al,[di]
+	cmp al,0
+	jnz count
+	mov di,1010
+	cld
+	push si
+	push di
+	mov ch,cl    
+f:	011d      //该函数用于从1100H依次往后扫描
+	pop di
+	pop si
+	mov cl,ch   
+	inc si
+	push si
+	push di
+	jmp g 
+g:	      //该函数用于每次对比子串
+	mov al,[si]
+	cmp al,0
+	jz e   
+	cmpsb
+	jnz f
+	dec cl
+	jz suc   
+	jmp g
+e:	      //父串中没有响应的子串
+	mov di,0
+	mov [1000],di
+	int3
+suc:      //找到子串输出位置
+	pop di
+	pop si
+	mov al,01
+	mov [1000],al
+	sub si,1100
+	mov [1001],si
+	int 3

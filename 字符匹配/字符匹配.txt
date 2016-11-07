@@ -1,0 +1,13 @@
+mov DI,1000
+mov CX,64    //用CX作为计数器，存入100
+mov AL,20
+Cld		//置DF为0，使串操作地址累加
+repne scasb   //循环进行扫描
+jz 0111     //跳到dec DI那步
+mov BL,00
+jmp 0118   //跳到mov [1100],BL那步
+dec DI
+mov [1101],DI
+mov BL,01
+mov [1100],BL
+int 3
